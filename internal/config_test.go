@@ -106,6 +106,7 @@ func TestConfig_defaults(t *testing.T) {
 	assert.Equal(t, defaultCacheSize, c.CacheSizeBytes)
 	assert.Equal(t, slog.LevelInfo, c.LogLevel)
 	assert.Equal(t, false, c.H2CEnabled)
+	assert.Equal(t, false, c.EncodeQuerySemicolons)
 }
 
 func TestConfig_override_defaults_with_env_vars(t *testing.T) {
@@ -119,6 +120,7 @@ func TestConfig_override_defaults_with_env_vars(t *testing.T) {
 	usingEnvVar(t, "ACME_DIRECTORY", "https://acme-staging-v02.api.letsencrypt.org/directory")
 	usingEnvVar(t, "LOG_REQUESTS", "false")
 	usingEnvVar(t, "H2C_ENABLED", "true")
+	usingEnvVar(t, "ENCODE_QUERY_SEMICOLONS", "true")
 
 	c, err := NewConfig()
 	require.NoError(t, err)
@@ -132,6 +134,7 @@ func TestConfig_override_defaults_with_env_vars(t *testing.T) {
 	assert.Equal(t, "https://acme-staging-v02.api.letsencrypt.org/directory", c.ACMEDirectoryURL)
 	assert.Equal(t, false, c.LogRequests)
 	assert.Equal(t, true, c.H2CEnabled)
+	assert.Equal(t, true, c.EncodeQuerySemicolons)
 }
 
 func TestConfig_override_defaults_with_env_vars_using_prefix(t *testing.T) {

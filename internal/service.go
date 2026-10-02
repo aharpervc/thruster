@@ -28,6 +28,7 @@ func (s *Service) Run() int {
 		badGatewayPage:           s.config.BadGatewayPage,
 		forwardHeaders:           s.config.ForwardHeaders,
 		logRequests:              s.config.LogRequests,
+		encodeQuerySemicolons:    s.config.EncodeQuerySemicolons,
 	}
 
 	handler := NewHandler(handlerOptions)

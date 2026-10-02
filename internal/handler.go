@@ -18,11 +18,13 @@ type HandlerOptions struct {
 	gzipCompressionEnabled   bool
 	forwardHeaders           bool
 	logRequests              bool
+	encodeQuerySemicolons    bool
 }
 
 func NewHandler(options HandlerOptions) http.Handler {
 	handler := NewProxyHandler(options.targetUrl, options.badGatewayPage, options.forwardHeaders)
 	handler = NewCacheHandler(options.cache, options.maxCacheableResponseBody, handler)
+	handler = NewQuerySemicolonHandler(options.encodeQuerySemicolons, handler)
 	handler = NewSendfileHandler(options.xSendfileEnabled, handler)
 	handler = NewRequestStartMiddleware(handler)
 
